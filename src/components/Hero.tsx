@@ -46,7 +46,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="min-h-[100svh] md:min-h-screen flex items-center relative pt-24 pb-6 md:py-0 px-[5%] overflow-hidden"
+      className="min-h-[100svh] md:min-h-screen flex items-center relative pt-24 pb-14 md:py-0 px-[5%] overflow-hidden"
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -63,7 +63,7 @@ const Hero = () => {
         <div className="absolute right-[20%] bottom-[18%] h-36 w-36 rounded-full bg-[#f5c400]/8 blur-3xl" />
       </motion.div>
 
-      <div className="absolute top-[58%] md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center">
+      <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center">
         <div className="relative h-[34vh] sm:h-[38vh] md:h-[70vh] max-h-[800px] flex items-center justify-center pointer-events-none perspective-[1000px]">
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
@@ -123,7 +123,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-center w-full z-20 pointer-events-none md:gap-0 gap-10 mt-4 md:mt-0">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full z-20 pointer-events-none md:gap-0 gap-12 mt-4 md:mt-0">
         <motion.div
           variants={COLUMN_STAGGER}
           initial="hidden"
@@ -179,6 +179,29 @@ const Hero = () => {
           animate="show"
           className="pointer-events-auto text-center md:text-right flex flex-col items-center md:items-end font-syne"
         >
+          <motion.div
+            variants={ITEM_REVEAL}
+            className="md:hidden relative h-[33vh] min-h-[220px] max-h-[320px] w-full mb-7 flex items-center justify-center pointer-events-none"
+          >
+            <div
+              className="absolute z-0 h-[88vw] w-[88vw] max-h-[360px] max-w-[360px]"
+              style={{
+                background: 'radial-gradient(circle, rgba(245,196,0,0.35) 0%, rgba(10,10,10,0) 70%)',
+                filter: 'blur(34px)',
+              }}
+            />
+            <img
+              src="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg.png"
+              alt="Sujith Kumar R"
+              width="600"
+              height="760"
+              decoding="async"
+              fetchPriority="high"
+              className="relative z-10 h-full w-auto object-cover opacity-95 drop-shadow-[0_0_40px_rgba(245,196,0,0.2)]"
+            />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[180vw] h-[40%] bg-gradient-to-t from-[#050505] via-[#050505]/88 to-transparent z-[20]" />
+          </motion.div>
+
           {['build.', 'ship.', 'repeat.'].map((word, index) => (
             <motion.div
               key={word}
