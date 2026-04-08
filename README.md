@@ -6,11 +6,14 @@ Built with React + TypeScript + Vite, with premium UI choreography powered by Fr
 
 ## Live Website
 
-- Production: https://sujith.dev
+- Production: https://sujithkumar-portfolio.vercel.app/
 
 ## What This Portfolio Highlights
 
 - Backend-focused positioning with clear project outcomes
+- Cinematic loading intro that plays on every refresh
+- Signature hero section with cursor-following spotlight and rotating role line
+- Bright, oversized skill marquee with smoother scroll presentation
 - Premium, scroll-aware motion design and section choreography
 - Responsive layout optimized for desktop and mobile
 - Custom cursor system with accessibility fallbacks
@@ -129,6 +132,8 @@ In development mode, analytics payloads are logged to the console for easier ver
 
 ## Performance and Accessibility Notes
 
+- The loading intro is short, polished, and now appears on each page refresh.
+- Hero glow and marquee effects are tuned for a stronger cinematic presentation.
 - Custom cursor is automatically disabled on touch/coarse-pointer devices.
 - Reduced-motion preferences are respected via CSS and motion fallbacks.
 - Heavy blur/background effects are tuned down on mobile for smoother rendering.
@@ -138,8 +143,9 @@ In development mode, analytics payloads are logged to the console for easier ver
 
 Quick edits you will most commonly make:
 
+- Loading intro and app-level motion: `src/App.tsx`
 - Hero content and CTAs: `src/components/Hero.tsx`
-- Project cards and case studies: `src/components/SelectedWorks.tsx`
+- Marquee text and band styling: `src/components/InfiniteMarquee.tsx`
 - Contact links and footer CTA: `src/components/ContactFooter.tsx`
 - Motion and cursor behavior: `src/components/CustomCursor.tsx`
 - Global theme/effects tokens: `src/index.css`
@@ -148,6 +154,7 @@ Quick edits you will most commonly make:
 
 Sujith Kumar R
 
+- Portfolio: https://sujithkumar-portfolio.vercel.app/
 - GitHub: https://github.com/Sujith-RMD
 - LinkedIn: https://www.linkedin.com/in/sujithkumar-r-267630378/
 - LeetCode: https://leetcode.com/u/SujithKumar-R/
