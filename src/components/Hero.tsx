@@ -46,7 +46,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center relative pt-20 pb-10 md:py-0 px-[5%] overflow-hidden"
+      className="min-h-[100svh] md:min-h-screen flex items-center relative pt-24 pb-6 md:py-0 px-[5%] overflow-hidden"
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -63,8 +63,8 @@ const Hero = () => {
         <div className="absolute right-[20%] bottom-[18%] h-36 w-36 rounded-full bg-[#f5c400]/8 blur-3xl" />
       </motion.div>
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center">
-        <div className="relative h-[40vh] md:h-[70vh] max-h-[800px] flex items-center justify-center pointer-events-none perspective-[1000px]">
+      <div className="absolute top-[58%] md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex items-center justify-center">
+        <div className="relative h-[34vh] sm:h-[38vh] md:h-[70vh] max-h-[800px] flex items-center justify-center pointer-events-none perspective-[1000px]">
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -123,16 +123,16 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-center w-full z-20 pointer-events-none md:gap-0 gap-10 mt-10 md:mt-0">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full z-20 pointer-events-none md:gap-0 gap-10 mt-4 md:mt-0">
         <motion.div
           variants={COLUMN_STAGGER}
           initial="hidden"
           animate="show"
-          className="pointer-events-auto max-w-[92vw] md:max-w-[320px] text-center md:text-left"
+          className="pointer-events-auto max-w-[92vw] md:max-w-[320px] text-center md:text-left mt-2 md:mt-0"
         >
           <motion.p
             variants={ITEM_REVEAL}
-            className="relative mb-5 max-w-[520px] rounded-2xl border border-[#2a2a2a] bg-[#0d0d0d]/62 px-5 py-4 text-[14px] leading-[1.75] text-[#cfcfcf] backdrop-blur-md md:backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+            className="relative mb-5 max-w-[520px] rounded-2xl border border-[#2a2a2a] bg-[#0d0d0d]/78 md:bg-[#0d0d0d]/62 px-4 md:px-5 py-4 text-[14px] leading-[1.75] text-[#cfcfcf] backdrop-blur-md md:backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
           >
             <span className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_12%_12%,rgba(245,196,0,0.14),transparent_45%)]" />
             <span className="relative block">
@@ -168,7 +168,7 @@ const Hero = () => {
             </a>
           </motion.div>
 
-          <motion.p variants={ITEM_REVEAL} className="text-[#888] text-[12px] mt-4 max-w-[300px] mx-auto md:mx-0">
+          <motion.p variants={ITEM_REVEAL} className="text-[#909090] text-[12px] mt-4 max-w-[320px] mx-auto md:mx-0 rounded-xl bg-[#0d0d0d]/55 px-3 py-2 md:bg-transparent md:px-0 md:py-0">
             Built and deployed multiple real-world backend systems handling APIs, ML pipelines, and cloud workflows.
           </motion.p>
         </motion.div>
@@ -184,13 +184,13 @@ const Hero = () => {
               key={word}
               variants={ITEM_REVEAL}
               transition={{ duration: 0.78, ease: REVEAL_EASE, delay: index * 0.06 }}
-              className="text-[clamp(46px,14vw,130px)] font-bold text-white leading-[0.85] tracking-[-3px] md:tracking-[-4px] uppercase"
+              className="text-[clamp(40px,13vw,130px)] font-bold text-white leading-[0.85] tracking-[-2px] md:tracking-[-4px] uppercase"
             >
               {index === 2 ? <span className="text-transparent text-outline-yellow">{word}</span> : word}
             </motion.div>
           ))}
 
-          <motion.div variants={ITEM_REVEAL} className="flex justify-center md:justify-end gap-2 mt-8 flex-wrap">
+          <motion.div variants={ITEM_REVEAL} className="flex justify-center md:justify-end gap-2 mt-6 md:mt-8 flex-wrap">
             {['FastAPI', 'REST API', 'MySQL', 'AWS', 'Python'].map((tag, i) => (
               <motion.span
                 key={tag}
