@@ -11,45 +11,45 @@ const SKILLS = [
 
 const InfiniteMarquee = () => {
   return (
-    <section className="py-14 md:py-20 bg-[#f5c400] overflow-hidden whitespace-nowrap rotate-0 md:rotate-[-2deg] scale-100 md:scale-110 translate-y-0 md:translate-y-10 z-30 relative border-y border-black/15 shadow-[0_16px_48px_rgba(0,0,0,0.3)]">
-      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#050505] via-[#050505]/50 to-transparent pointer-events-none" />
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent pointer-events-none" />
-      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#050505]/25 to-transparent pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#050505]/25 to-transparent pointer-events-none" />
-      <motion.div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        animate={{ opacity: [0.12, 0.2, 0.12] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-white/35" />
-        <div className="absolute inset-x-0 bottom-0 h-[2px] bg-black/20" />
-      </motion.div>
-      <div className="flex w-[200%]">
-        <motion.div 
-          className="flex whitespace-nowrap"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 18 }}
+    <section className="py-16 md:py-24 relative z-30 overflow-visible">
+      <div className="relative bg-[#ffd400] overflow-hidden whitespace-nowrap border-y border-black/10 shadow-[0_18px_60px_rgba(0,0,0,0.34)] transform-gpu will-change-transform rotate-0 md:rotate-[-2deg] scale-100 md:scale-[1.16] translate-y-0 md:translate-y-12 origin-center">
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#050505] via-[#050505]/18 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#050505] via-[#050505]/14 to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#050505]/14 to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#050505]/14 to-transparent pointer-events-none" />
+        <motion.div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          animate={{ opacity: [0.12, 0.2, 0.12] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
         >
-          {/* First set */}
-          {SKILLS.map((skill, index) => (
-            <span 
-              key={`skill-1-${index}`} 
-              className="text-[#050505] text-[clamp(24px,8vw,80px)] font-black mx-5 md:mx-8 font-syne tracking-tight"
-            >
-              {skill} <span className="text-white mx-4">•</span>
-            </span>
-          ))}
-          {/* Second set (duplicate for seamless loop) */}
-          {SKILLS.map((skill, index) => (
-            <span 
-              key={`skill-2-${index}`} 
-              className="text-[#050505] text-[clamp(24px,8vw,80px)] font-black mx-5 md:mx-8 font-syne tracking-tight"
-            >
-              {skill} <span className="text-white mx-4">•</span>
-            </span>
-          ))}
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-white/35" />
+          <div className="absolute inset-x-0 bottom-0 h-[2px] bg-black/20" />
         </motion.div>
+        <div className="flex w-[200%] transform-gpu will-change-transform">
+          <motion.div
+            className="flex whitespace-nowrap transform-gpu will-change-transform"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ repeat: Infinity, ease: 'linear', duration: 18 }}
+          >
+            {SKILLS.map((skill, index) => (
+              <span
+                key={`skill-1-${index}`}
+                className="text-[#000000] text-[clamp(30px,9vw,92px)] font-black mx-5 md:mx-9 font-syne tracking-tight drop-shadow-[0_0_12px_rgba(255,255,255,0.12)]"
+              >
+                {skill} <span className="text-white mx-4">•</span>
+              </span>
+            ))}
+            {SKILLS.map((skill, index) => (
+              <span
+                key={`skill-2-${index}`}
+                className="text-[#000000] text-[clamp(30px,9vw,92px)] font-black mx-5 md:mx-9 font-syne tracking-tight drop-shadow-[0_0_12px_rgba(255,255,255,0.12)]"
+              >
+                {skill} <span className="text-white mx-4">•</span>
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

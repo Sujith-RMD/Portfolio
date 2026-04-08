@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { trackEvent } from '../utils/analytics';
 
 const REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
@@ -28,12 +29,48 @@ const ITEM_REVEAL = {
 
 const Hero = () => {
   const reduceMotion = useReducedMotion();
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  const spotlightX = useMotionValue(0.5);
+  const spotlightY = useMotionValue(0.45);
+  const smoothSpotlightX = useSpring(spotlightX, { stiffness: 95, damping: 22, mass: 0.45 });
+  const smoothSpotlightY = useSpring(spotlightY, { stiffness: 95, damping: 22, mass: 0.45 });
+  const spotlightBackground = useMotionTemplate`radial-gradient(520px circle at calc(${smoothSpotlightX} * 100%) calc(${smoothSpotlightY} * 100%), rgba(245,196,0,0.17), transparent 65%)`;
+
+  const roles = ['Backend Engineer', 'API Architect', 'Cloud Builder'];
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const roleTimer = window.setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 2200);
+
+    return () => window.clearInterval(roleTimer);
+  }, [reduceMotion, roles.length]);
+
+  const handleHeroMouseMove = (event: React.MouseEvent<HTMLElement>) => {
+    if (reduceMotion) return;
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = Math.min(Math.max((event.clientX - rect.left) / rect.width, 0), 1);
+    const y = Math.min(Math.max((event.clientY - rect.top) / rect.height, 0), 1);
+
+    spotlightX.set(x);
+    spotlightY.set(y);
+  };
 
   return (
     <section
       id="hero"
       className="min-h-[100svh] md:min-h-screen flex items-center relative pt-24 pb-14 md:py-0 px-[5%] overflow-hidden"
+      onMouseMove={handleHeroMouseMove}
     >
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none z-[4]"
+        style={{ background: spotlightBackground }}
+      />
+
       <motion.div
         aria-hidden="true"
         initial={{ opacity: 0 }}
@@ -60,10 +97,56 @@ const Hero = () => {
           />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.3, delay: 0.15, ease: REVEAL_EASE }}
-            className="absolute z-[5] h-[54%] w-[56%] rounded-[40%] border border-white/10 bg-white/[0.03] blur-[0.5px]"
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0.9, rotate: -8 }}
+            animate={{ opacity: [0.12, 0.22, 0.14], scale: [0.9, 1.03, 0.96], rotate: [-8, -2, -6] }}
+            transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute z-[4] h-[58%] w-[70%] rounded-full blur-3xl"
+            style={{
+              background:
+                'radial-gradient(closest-side at 48% 46%, rgba(245,196,0,0.18) 0%, rgba(245,196,0,0.08) 36%, rgba(245,196,0,0) 72%)',
+              filter: 'blur(22px)',
+            }}
+          />
+
+          <motion.div
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: [0.18, 0.34, 0.22], scale: [0.95, 1.02, 0.98] }}
+            transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute z-[5] h-[72%] w-[84%] rounded-full blur-[48px]"
+            style={{
+              background:
+                'radial-gradient(circle at 52% 50%, rgba(245,196,0,0.24) 0%, rgba(245,196,0,0.1) 20%, rgba(245,196,0,0.03) 38%, rgba(245,196,0,0) 68%)',
+            }}
+          />
+
+          <motion.div
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.05, 0.14, 0.08] }}
+            transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute z-[5] h-[60%] w-[72%] rounded-full"
+            style={{
+              background:
+                'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 28%, rgba(245,196,0,0.08) 50%, rgba(255,255,255,0.02) 72%, rgba(255,255,255,0.1) 100%)',
+              filter: 'blur(34px)',
+              maskImage: 'radial-gradient(circle at center, black 52%, transparent 86%)',
+              WebkitMaskImage: 'radial-gradient(circle at center, black 52%, transparent 86%)',
+            }}
+          />
+
+          <motion.div
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: [0.08, 0.16, 0.1], scale: [0.96, 1.02, 0.98] }}
+            transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute z-[6] h-[66%] w-[68%] rounded-full"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 46%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 24%, rgba(255,255,255,0.0) 64%)',
+              filter: 'blur(30px)',
+            }}
           />
 
           <motion.div
@@ -137,6 +220,17 @@ const Hero = () => {
               Built systems for fraud detection, AWS cost optimization, and AI-powered analysis.
             </span>
           </motion.p>
+
+          <motion.div
+            variants={ITEM_REVEAL}
+            className="mb-5 inline-flex items-center gap-3 rounded-full border border-[#373737] bg-[#0f0f0f]/75 px-4 py-2 text-[11px] uppercase tracking-[1.6px] text-[#9f9f9f]"
+          >
+            <span className="h-2 w-2 rounded-full bg-[#f5c400] shadow-[0_0_12px_rgba(245,196,0,0.8)]" />
+            <span className="text-[#7d7d7d]">Now operating as</span>
+            <span className="min-w-[148px] text-left text-[#f5c400] font-bold">
+              {roles[roleIndex]}
+            </span>
+          </motion.div>
 
           <motion.div variants={ITEM_REVEAL} className="flex flex-wrap items-center justify-center gap-4 md:justify-start">
             <a
