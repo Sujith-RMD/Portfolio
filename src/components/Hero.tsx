@@ -1,6 +1,5 @@
-import React, { useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { trackEvent } from '../utils/analytics';
 
 const REVEAL_EASE = [0.22, 1, 0.36, 1] as const;
@@ -28,28 +27,12 @@ const ITEM_REVEAL = {
 } as const;
 
 const Hero = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 20;
-    const y = (e.clientY - top - height / 2) / 20;
-    setMousePosition({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setMousePosition({ x: 0, y: 0 });
-  };
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
       id="hero"
       className="min-h-[100svh] md:min-h-screen flex items-center relative pt-24 pb-14 md:py-0 px-[5%] overflow-hidden"
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
       <motion.div
         aria-hidden="true"
@@ -86,16 +69,22 @@ const Hero = () => {
           <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{
-              y: 0,
+              y: reduceMotion ? 0 : [0, -6, 0],
               opacity: 1,
-              rotateX: -mousePosition.y,
-              rotateY: mousePosition.x,
             }}
             transition={{
               y: { duration: 1, delay: 0.2 },
               opacity: { duration: 1, delay: 0.2 },
-              rotateX: { type: 'spring', stiffness: 100, damping: 30 },
-              rotateY: { type: 'spring', stiffness: 100, damping: 30 },
+              ...(reduceMotion
+                ? {}
+                : {
+                    y: {
+                      delay: 0.2,
+                      duration: 7,
+                      ease: 'easeInOut',
+                      repeat: Infinity,
+                    },
+                  }),
             }}
             className="h-full w-auto relative z-10 flex justify-center perspective-[1000px] transform-style-[preserve-3d]"
           >
