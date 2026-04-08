@@ -1,14 +1,14 @@
 # Sujith Portfolio
 
-A high-impact, animation-driven developer portfolio for showcasing backend engineering work, project outcomes, and contact pathways.
+A cinematic, backend-focused portfolio designed to present engineering capability through shipped work, measurable outcomes, and a strong product mindset.
 
-Built with React + TypeScript + Vite, with premium UI choreography powered by Framer Motion.
+Built with React + TypeScript + Vite, with polished motion direction powered by Framer Motion.
 
 ## Live Website
 
 - Production: https://sujithkumar-portfolio.vercel.app/
 
-## What This Portfolio Highlights
+## Why This Portfolio Stands Out
 
 - Backend-focused positioning with clear project outcomes
 - Cinematic loading intro that plays on every refresh
@@ -20,6 +20,13 @@ Built with React + TypeScript + Vite, with premium UI choreography powered by Fr
 - Sticky project cards with case-study modal overlays
 - Contact conversion section with social proof links
 - Event tracking hooks for CTA/navigation analytics
+
+## Core Experience
+
+- Present a clear engineering identity in the first screen
+- Show project depth through outcomes, architecture, and tooling
+- Keep the interface expressive without sacrificing readability
+- Make recruiter/client contact frictionless
 
 ## Tech Stack
 
@@ -138,6 +145,15 @@ In development mode, analytics payloads are logged to the console for easier ver
 - Reduced-motion preferences are respected via CSS and motion fallbacks.
 - Heavy blur/background effects are tuned down on mobile for smoother rendering.
 - Keyboard focus states are included for interactive controls.
+
+## Hiring Context
+
+This portfolio is optimized for backend internship and collaboration visibility, highlighting practical delivery across:
+
+- API engineering
+- Data and ML workflows
+- AWS/cloud deployment patterns
+- Production-minded system design
 
 ## Customization Guide
 
