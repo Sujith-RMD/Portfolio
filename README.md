@@ -1,73 +1,153 @@
-# React + TypeScript + Vite
+# Sujith Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-impact, animation-driven developer portfolio for showcasing backend engineering work, project outcomes, and contact pathways.
 
-Currently, two official plugins are available:
+Built with React + TypeScript + Vite, with premium UI choreography powered by Framer Motion.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Website
 
-## React Compiler
+- Production: https://sujith.dev
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## What This Portfolio Highlights
 
-## Expanding the ESLint configuration
+- Backend-focused positioning with clear project outcomes
+- Premium, scroll-aware motion design and section choreography
+- Responsive layout optimized for desktop and mobile
+- Custom cursor system with accessibility fallbacks
+- Sticky project cards with case-study modal overlays
+- Contact conversion section with social proof links
+- Event tracking hooks for CTA/navigation analytics
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React 19
+- TypeScript
+- Vite 8
+- Tailwind CSS 4
+- Framer Motion
+- Lucide React icons
+- ESLint 9
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+.
+├── public/
+│   ├── 404.html
+│   ├── _redirects
+│   ├── RESUME.pdf
+│   ├── favicon.svg
+│   └── Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg.png
+├── src/
+│   ├── components/
+│   │   ├── ContactFooter.tsx
+│   │   ├── CustomCursor.tsx
+│   │   ├── Hero.tsx
+│   │   ├── InfiniteMarquee.tsx
+│   │   └── SelectedWorks.tsx
+│   ├── utils/
+│   │   └── analytics.ts
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── index.html
+├── vercel.json
+└── package.json
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1) Clone
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/Sujith-RMD/Portfolio.git
+cd Portfolio
 ```
+
+### 2) Install dependencies
+
+```bash
+npm install
+```
+
+### 3) Start development server
+
+```bash
+npm run dev
+```
+
+The app runs at:
+
+- http://localhost:5173
+
+## Available Scripts
+
+- `npm run dev` - Start local development server with HMR
+- `npm run build` - Type-check and create production build
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint checks
+
+## Build and Deployment
+
+### Build for production
+
+```bash
+npm run build
+```
+
+Generated output:
+
+- `dist/`
+
+### Deploy on Vercel
+
+This project includes `vercel.json` with:
+
+- SPA rewrite to `index.html`
+- Security headers (`X-Content-Type-Options`, `Referrer-Policy`)
+
+Deploy steps:
+
+1. Import this GitHub repository into Vercel.
+2. Framework preset: `Vite`.
+3. Build command: `npm run build`.
+4. Output directory: `dist`.
+
+## Analytics Events
+
+Tracked interactions are handled in `src/utils/analytics.ts` through `trackEvent(eventName, params)`.
+
+Current event categories include:
+
+- Navigation clicks
+- Resume clicks
+- Hero CTA clicks
+- Project repository/case study interactions
+- Footer email/social interactions
+
+In development mode, analytics payloads are logged to the console for easier verification.
+
+## Performance and Accessibility Notes
+
+- Custom cursor is automatically disabled on touch/coarse-pointer devices.
+- Reduced-motion preferences are respected via CSS and motion fallbacks.
+- Heavy blur/background effects are tuned down on mobile for smoother rendering.
+- Keyboard focus states are included for interactive controls.
+
+## Customization Guide
+
+Quick edits you will most commonly make:
+
+- Hero content and CTAs: `src/components/Hero.tsx`
+- Project cards and case studies: `src/components/SelectedWorks.tsx`
+- Contact links and footer CTA: `src/components/ContactFooter.tsx`
+- Motion and cursor behavior: `src/components/CustomCursor.tsx`
+- Global theme/effects tokens: `src/index.css`
+
+## Author
+
+Sujith Kumar R
+
+- GitHub: https://github.com/Sujith-RMD
+- LinkedIn: https://www.linkedin.com/in/sujithkumar-r-267630378/
+- LeetCode: https://leetcode.com/u/SujithKumar-R/
