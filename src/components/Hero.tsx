@@ -292,7 +292,7 @@ const Hero = () => {
               transition={{ duration: 0.78, ease: REVEAL_EASE, delay: index * 0.06 }}
               className="text-[clamp(40px,13vw,130px)] font-bold text-white leading-[0.85] tracking-[-2px] md:tracking-[-4px] uppercase"
             >
-              {index === 2 ? <span className="text-transparent text-outline-yellow">{word}</span> : word}
+              {index === 2 ? <span className="hero-repeat-flicker" data-text={word}>{word}</span> : word}
             </motion.div>
           ))}
 

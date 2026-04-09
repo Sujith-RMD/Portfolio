@@ -130,3 +130,98 @@ body::after {
   mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 }
+
+.hero-repeat-flicker {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  transform: translateZ(0);
+  will-change: opacity, filter, text-shadow;
+  color: #f5c400;
+  -webkit-text-stroke: 0;
+  text-shadow:
+    0 0 9px rgba(245, 196, 0, 0.82),
+    0 0 24px rgba(245, 196, 0, 0.62),
+    0 0 46px rgba(245, 196, 0, 0.42);
+  animation: heroRepeatFlicker 3.4s steps(1, end) infinite;
+}
+
+.hero-repeat-flicker::before,
+.hero-repeat-flicker::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.hero-repeat-flicker::before {
+  color: rgba(255, 242, 193, 0.82);
+  mix-blend-mode: screen;
+  text-shadow: 0 0 16px rgba(255, 241, 176, 0.72);
+  animation: heroRepeatGhostJitter 210ms steps(2, end) infinite;
+}
+
+.hero-repeat-flicker::after {
+  color: rgba(245, 196, 0, 0.56);
+  mix-blend-mode: plus-lighter;
+  text-shadow: 0 0 22px rgba(245, 196, 0, 0.68), 0 0 40px rgba(245, 196, 0, 0.38);
+  animation: heroRepeatSparkPulse 520ms steps(2, end) infinite;
+}
+
+@supports not (mix-blend-mode: plus-lighter) {
+  .hero-repeat-flicker::after {
+    mix-blend-mode: screen;
+    opacity: 0.34;
+  }
+}
+
+@keyframes heroRepeatFlicker {
+  0% { opacity: 1; filter: brightness(1.28); text-shadow: 0 0 10px rgba(245, 196, 0, 0.9), 0 0 24px rgba(245, 196, 0, 0.68), 0 0 46px rgba(245, 196, 0, 0.44); }
+  4% { opacity: 0.42; filter: brightness(0.58); text-shadow: 0 0 2px rgba(245, 196, 0, 0.22), 0 0 8px rgba(245, 196, 0, 0.14), 0 0 14px rgba(245, 196, 0, 0.1); }
+  6% { opacity: 0.98; filter: brightness(1.18); text-shadow: 0 0 9px rgba(245, 196, 0, 0.84), 0 0 22px rgba(245, 196, 0, 0.62), 0 0 40px rgba(245, 196, 0, 0.4); }
+  10% { opacity: 0.14; filter: brightness(0.32); text-shadow: 0 0 1px rgba(245, 196, 0, 0.1), 0 0 4px rgba(245, 196, 0, 0.08), 0 0 7px rgba(245, 196, 0, 0.06); }
+  11% { opacity: 0.03; filter: brightness(0.08); text-shadow: 0 0 1px rgba(245, 196, 0, 0.06), 0 0 2px rgba(245, 196, 0, 0.04), 0 0 4px rgba(245, 196, 0, 0.03); }
+  14% { opacity: 0.96; filter: brightness(1.16); text-shadow: 0 0 9px rgba(245, 196, 0, 0.84), 0 0 22px rgba(245, 196, 0, 0.64), 0 0 42px rgba(245, 196, 0, 0.42); }
+  22% { opacity: 0.72; filter: brightness(0.86); text-shadow: 0 0 5px rgba(245, 196, 0, 0.4), 0 0 12px rgba(245, 196, 0, 0.28), 0 0 20px rgba(245, 196, 0, 0.2); }
+  28% { opacity: 1; filter: brightness(1.3); text-shadow: 0 0 10px rgba(245, 196, 0, 0.92), 0 0 24px rgba(245, 196, 0, 0.7), 0 0 48px rgba(245, 196, 0, 0.46); }
+  29% { opacity: 0.05; filter: brightness(0.12); text-shadow: 0 0 1px rgba(245, 196, 0, 0.06), 0 0 2px rgba(245, 196, 0, 0.05), 0 0 5px rgba(245, 196, 0, 0.04); }
+  31% { opacity: 0.95; filter: brightness(1.14); text-shadow: 0 0 8px rgba(245, 196, 0, 0.8), 0 0 20px rgba(245, 196, 0, 0.58), 0 0 38px rgba(245, 196, 0, 0.38); }
+  40% { opacity: 0.6; filter: brightness(0.74); text-shadow: 0 0 4px rgba(245, 196, 0, 0.3), 0 0 10px rgba(245, 196, 0, 0.22), 0 0 18px rgba(245, 196, 0, 0.15); }
+  48% { opacity: 0.99; filter: brightness(1.22); text-shadow: 0 0 9px rgba(245, 196, 0, 0.86), 0 0 22px rgba(245, 196, 0, 0.64), 0 0 42px rgba(245, 196, 0, 0.42); }
+  55% { opacity: 0.12; filter: brightness(0.28); text-shadow: 0 0 1px rgba(245, 196, 0, 0.08), 0 0 3px rgba(245, 196, 0, 0.06), 0 0 7px rgba(245, 196, 0, 0.05); }
+  56% { opacity: 0.02; filter: brightness(0.06); text-shadow: 0 0 1px rgba(245, 196, 0, 0.05), 0 0 2px rgba(245, 196, 0, 0.04), 0 0 4px rgba(245, 196, 0, 0.03); }
+  60% { opacity: 0.97; filter: brightness(1.16); text-shadow: 0 0 9px rgba(245, 196, 0, 0.84), 0 0 22px rgba(245, 196, 0, 0.62), 0 0 40px rgba(245, 196, 0, 0.4); }
+  69% { opacity: 0.78; filter: brightness(0.9); text-shadow: 0 0 5px rgba(245, 196, 0, 0.44), 0 0 12px rgba(245, 196, 0, 0.32), 0 0 22px rgba(245, 196, 0, 0.22); }
+  75% { opacity: 1; filter: brightness(1.24); text-shadow: 0 0 10px rgba(245, 196, 0, 0.9), 0 0 24px rgba(245, 196, 0, 0.68), 0 0 46px rgba(245, 196, 0, 0.44); }
+  79% { opacity: 0.08; filter: brightness(0.16); text-shadow: 0 0 1px rgba(245, 196, 0, 0.07), 0 0 2px rgba(245, 196, 0, 0.05), 0 0 5px rgba(245, 196, 0, 0.04); }
+  80% { opacity: 0.04; filter: brightness(0.1); text-shadow: 0 0 1px rgba(245, 196, 0, 0.06), 0 0 2px rgba(245, 196, 0, 0.04), 0 0 4px rgba(245, 196, 0, 0.03); }
+  83% { opacity: 0.96; filter: brightness(1.14); text-shadow: 0 0 8px rgba(245, 196, 0, 0.8), 0 0 20px rgba(245, 196, 0, 0.6), 0 0 38px rgba(245, 196, 0, 0.38); }
+  91% { opacity: 0.52; filter: brightness(0.66); text-shadow: 0 0 3px rgba(245, 196, 0, 0.24), 0 0 8px rgba(245, 196, 0, 0.16), 0 0 14px rgba(245, 196, 0, 0.1); }
+  100% { opacity: 0.98; filter: brightness(1.2); text-shadow: 0 0 9px rgba(245, 196, 0, 0.86), 0 0 22px rgba(245, 196, 0, 0.64), 0 0 42px rgba(245, 196, 0, 0.42); }
+}
+
+@keyframes heroRepeatGhostJitter {
+  0% { transform: translate(0, 0); opacity: 0; }
+  20% { transform: translate(-1px, 0); opacity: 0.18; }
+  40% { transform: translate(1px, -1px); opacity: 0.04; }
+  60% { transform: translate(-1px, 1px); opacity: 0.2; }
+  80% { transform: translate(1px, 0); opacity: 0.06; }
+  100% { transform: translate(0, 0); opacity: 0; }
+}
+
+@keyframes heroRepeatSparkPulse {
+  0% { opacity: 0.1; transform: scale(1); }
+  25% { opacity: 0.36; transform: scale(1.005); }
+  50% { opacity: 0.08; transform: scale(1); }
+  75% { opacity: 0.42; transform: scale(1.008); }
+  100% { opacity: 0.1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-repeat-flicker,
+  .hero-repeat-flicker::before,
+  .hero-repeat-flicker::after {
+    animation: none;
+  }
+}
