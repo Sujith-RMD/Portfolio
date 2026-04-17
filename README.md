@@ -6,7 +6,7 @@ Built with React + TypeScript + Vite, with polished motion direction powered by 
 
 ## Live Website
 
-- Production: https://sujithkumar-portfolio.vercel.app/
+- Production: https://sujithkumar.dev/
 
 ## Why This Portfolio Stands Out
 
@@ -170,7 +170,7 @@ Quick edits you will most commonly make:
 
 Sujith Kumar R
 
-- Portfolio: https://sujithkumar-portfolio.vercel.app/
+- Portfolio: https://sujithkumar.dev/
 - GitHub: https://github.com/Sujith-RMD
 - LinkedIn: https://www.linkedin.com/in/sujithkumar-r-267630378/
 - LeetCode: https://leetcode.com/u/SujithKumar-R/
