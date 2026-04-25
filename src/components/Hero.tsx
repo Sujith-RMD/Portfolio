@@ -232,6 +232,14 @@ const Hero = () => {
             </span>
           </motion.div>
 
+          <motion.div
+            variants={ITEM_REVEAL}
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#10b981]/30 bg-[#10b981]/[0.06] px-4 py-1.5 text-[11px] uppercase tracking-[1.4px]"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.7)] animate-pulse" />
+            <span className="text-[#10b981] font-bold">GSSoC'26 Open Source Contributor</span>
+          </motion.div>
+
           <motion.div variants={ITEM_REVEAL} className="flex flex-wrap items-center justify-center gap-4 md:justify-start">
             <a
               href="#projects"
