@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { trackEvent } from '../utils/analytics';
 
 type Project = {
@@ -137,34 +137,80 @@ type ProjectCardProps = {
 const ProjectCard = ({ project, index, onOpenCaseStudy }: ProjectCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
+  const [isHovered, setIsHovered] = useState(false);
   const isReversed = index % 2 === 1;
+
+  // Image parallax on scroll
+  const { scrollYProgress: cardScroll } = useScroll({
+    target: cardRef,
+    offset: ['start end', 'end start'],
+  });
+  const imageY = useTransform(cardScroll, [0, 1], ['-5%', '5%']);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    setMousePos({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    setMousePos({ x: x * 100, y: y * 100 });
+    // 3D tilt: max ±4 degrees
+    setTilt({
+      rotateX: (0.5 - y) * 8,
+      rotateY: (x - 0.5) * 8,
     });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ rotateX: 0, rotateY: 0 });
+    setIsHovered(false);
   };
 
   return (
     <motion.div
       ref={cardRef}
-      className="md:sticky rounded-2xl md:rounded-3xl border border-[#252525] shadow-[0_24px_60px_rgba(0,0,0,0.5)] interactive overflow-hidden group"
-      style={{ top: `${100 + index * 40}px`, zIndex: index }}
+      className="md:sticky rounded-2xl md:rounded-3xl shadow-[0_24px_60px_rgba(0,0,0,0.5)] interactive overflow-hidden group"
+      style={{
+        top: `${100 + index * 40}px`,
+        zIndex: index,
+        perspective: '1000px',
+        border: `1px solid ${isHovered ? `${project.accent}40` : '#252525'}`,
+        transition: 'border-color 0.4s ease',
+      }}
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4 }}
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.75, delay: index * 0.06, ease: REVEAL_EASE }}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
     >
-      {/* Accent glow on top */}
+      {/* 3D tilt wrapper */}
       <div
-        className="absolute inset-x-0 top-0 h-px"
-        style={{ background: `linear-gradient(90deg, transparent, ${project.accent}50, transparent)` }}
+        style={{
+          transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+          transition: 'transform 0.15s ease-out',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+      {/* Accent glow on top — pulses on hover */}
+      <div
+        className="absolute inset-x-0 top-0 h-px transition-opacity duration-500"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${project.accent}${isHovered ? '90' : '50'}, transparent)`,
+          boxShadow: isHovered ? `0 0 20px ${project.accent}30, 0 0 40px ${project.accent}15` : 'none',
+        }}
       />
+
+      {/* Border glow effect on hover */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 rounded-2xl md:rounded-3xl pointer-events-none z-[1] animate-pulse"
+          style={{
+            boxShadow: `inset 0 0 30px ${project.accent}08, 0 0 30px ${project.accent}10`,
+          }}
+        />
+      )}
 
       {/* Mouse-follow spotlight */}
       <div
@@ -192,7 +238,8 @@ const ProjectCard = ({ project, index, onOpenCaseStudy }: ProjectCardProps) => {
             height="500"
             loading="lazy"
             decoding="async"
-            className="w-full h-[220px] md:h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+            style={{ y: imageY }}
+            className="w-full h-[220px] md:h-full object-cover object-top scale-[1.12] group-hover:scale-[1.16] transition-transform duration-700 ease-out"
           />
 
           {/* Image overlay gradient from accent */}
@@ -304,6 +351,7 @@ const ProjectCard = ({ project, index, onOpenCaseStudy }: ProjectCardProps) => {
           </div>
         </div>
       </div>
+      </div>
     </motion.div>
   );
 };
@@ -347,15 +395,33 @@ const SelectedWorks = () => {
       </motion.div>
 
       <div className="max-w-6xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, ease: REVEAL_EASE }}
-          className="text-[clamp(42px,10vw,90px)] font-black tracking-[-2px] mb-16 md:mb-24 text-white font-syne leading-none"
-        >
-          Selected <span className="text-transparent text-outline-yellow block md:inline">Works.</span>
-        </motion.h2>
+        <h2 className="text-[clamp(42px,10vw,90px)] font-black tracking-[-2px] mb-16 md:mb-24 text-white font-syne leading-none overflow-hidden">
+          <motion.span
+            className="inline-block"
+            initial={{ y: '100%', opacity: 0 }}
+            whileInView={{ y: '0%', opacity: 1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.8, ease: REVEAL_EASE }}
+          >
+            Selected{' '}
+          </motion.span>
+          <motion.span
+            className="inline-block text-transparent text-outline-yellow relative"
+            initial={{ y: '100%', opacity: 0 }}
+            whileInView={{ y: '0%', opacity: 1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.8, delay: 0.15, ease: REVEAL_EASE }}
+          >
+            Works.
+            <motion.span
+              className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#f5c400] to-[#f5c400]/0 rounded-full"
+              initial={{ width: '0%' }}
+              whileInView={{ width: '100%' }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1, delay: 0.6, ease: REVEAL_EASE }}
+            />
+          </motion.span>
+        </h2>
 
         <div className="flex flex-col gap-6 md:gap-8 pb-20 md:pb-32 relative z-10">
           {PROJECTS.map((project, idx) => (

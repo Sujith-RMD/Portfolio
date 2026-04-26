@@ -122,38 +122,65 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const sectionIds = ['hero', 'projects', 'contact'];
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((section): section is HTMLElement => Boolean(section));
+    const sectionIds = ['hero', 'projects', 'contact'] as const;
 
-    if (!sections.length) return;
+    const updateActiveSection = () => {
+      const marker = window.scrollY + window.innerHeight * 0.45;
+      let nextSection = 'hero';
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      sectionIds.forEach((id) => {
+        const section = document.getElementById(id);
+        if (!section) return;
 
-        if (visibleEntries[0]?.target.id) {
-          setActiveSection(visibleEntries[0].target.id);
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+
+        if (marker >= top && marker < bottom) {
+          nextSection = id;
+        } else if (marker >= bottom) {
+          nextSection = id;
         }
-      },
-      { threshold: [0.2, 0.4, 0.6, 0.8], rootMargin: '-20% 0px -30% 0px' }
-    );
+      });
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+      setActiveSection(nextSection);
+    };
+
+    updateActiveSection();
+
+    let rafId = 0;
+    const handleScroll = () => {
+      window.cancelAnimationFrame(rafId);
+      rafId = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
     <div className={`font-['Inter'] text-white bg-[#050505] selection:bg-[#f5c400] selection:text-black transition-opacity duration-700 ${appReady ? 'opacity-100' : 'opacity-0'}`}>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showIntro && (
           <motion.div
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            exit={{
+              scale: 1.15,
+              opacity: 0,
+              filter: 'blur(18px) brightness(2.2)',
+            }}
+            transition={{
+              duration: 0.85,
+              ease: [0.22, 1, 0.36, 1],
+              opacity: { duration: 0.7, delay: 0.15 },
+              filter: { duration: 0.65 },
+              scale: { duration: 0.85 },
+            }}
             className="fixed inset-0 z-[220] bg-[#040404] flex items-center justify-center overflow-hidden"
           >
             <motion.div
@@ -294,10 +321,25 @@ const App = () => {
         )}
       </AnimatePresence>
 
+      {/* Golden flash wipe on intro exit */}
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            aria-hidden="true"
+            className="fixed inset-0 z-[210] pointer-events-none"
+            initial={{ opacity: 0 }}
+            exit={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,196,0,0.35),rgba(245,196,0,0.08)_40%,transparent_70%)]" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <CustomCursor />
 
       <motion.div
-        className="fixed top-0 left-0 z-[160] h-[2px] w-full origin-left bg-gradient-to-r from-[#f5c400] via-[#ffe178] to-[#f5c400]"
+        className="fixed top-0 left-0 z-[160] h-[3px] w-full origin-left bg-gradient-to-r from-[#f5c400] via-[#ffe178] to-[#f5c400] shadow-[0_0_8px_rgba(245,196,0,0.5),0_0_20px_rgba(245,196,0,0.25)]"
         style={{ scaleX: progressScaleX }}
       />
       
@@ -370,14 +412,25 @@ const App = () => {
         </AnimatePresence>
       </nav>
 
-      <main>
+      <motion.main
+        initial={{ opacity: 0, y: 60, scale: 0.92, filter: 'blur(6px)' }}
+        animate={!showIntro ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' } : {}}
+        transition={{
+          duration: 1.1,
+          ease: [0.22, 1, 0.36, 1],
+          opacity: { duration: 0.7, delay: 0.05 },
+          y: { duration: 1.1, delay: 0 },
+          scale: { duration: 1.2, delay: 0 },
+          filter: { duration: 0.6, delay: 0.1 },
+        }}
+      >
         <motion.div
           variants={SECTION_REVEAL}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-120px' }}
         >
-          <Hero />
+          <Hero introFinished={!showIntro} />
         </motion.div>
 
         <motion.div
@@ -397,7 +450,7 @@ const App = () => {
         >
           <SelectedWorks />
         </motion.div>
-      </main>
+      </motion.main>
 
       <ContactFooter />
     </div>
