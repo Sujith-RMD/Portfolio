@@ -14,7 +14,7 @@ const ITEM_REVEAL = {
   },
 } as const;
 
-const Hero = ({ introFinished = false }: { introFinished?: boolean }) => {
+const Hero = () => {
   const reduceMotion = useReducedMotion();
   const [roleIndex, setRoleIndex] = useState(0);
 
@@ -187,15 +187,27 @@ const Hero = ({ introFinished = false }: { introFinished?: boolean }) => {
             }}
             className="h-full w-auto relative z-10 flex justify-center perspective-[1000px] transform-style-[preserve-3d]"
           >
-            <img
-              src="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg.png"
-              alt="Sujith Kumar R"
-              width="820"
-              height="980"
-              decoding="async"
-              fetchPriority="high"
-              className="h-full w-auto object-cover opacity-95 md:opacity-100 drop-shadow-[0_0_50px_rgba(245,196,0,0.25)]"
-            />
+            <picture>
+              <source
+                type="image/avif"
+                srcSet="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-800.avif 800w, /Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-1200.avif 1200w, /Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-1600.avif 1600w"
+                sizes="60vw"
+              />
+              <source
+                type="image/webp"
+                srcSet="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-800.webp 800w, /Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-1200.webp 1200w, /Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-1600.webp 1600w"
+                sizes="60vw"
+              />
+              <img
+                src="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-1200.webp"
+                alt="Sujith Kumar R"
+                width="820"
+                height="980"
+                decoding="async"
+                fetchPriority="high"
+                className="h-full w-auto object-cover opacity-95 md:opacity-100 drop-shadow-[0_0_50px_rgba(245,196,0,0.25)]"
+              />
+            </picture>
 
             <motion.div
               aria-hidden="true"
@@ -211,12 +223,12 @@ const Hero = ({ introFinished = false }: { introFinished?: boolean }) => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-center w-full z-20 pointer-events-none md:gap-0 gap-12 mt-4 md:mt-0">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full z-20 pointer-events-none md:gap-0 gap-8 mt-4 md:mt-0">
         <motion.div
           variants={leftColumnStagger}
           initial="hidden"
-          animate={introFinished ? 'show' : 'hidden'}
-          className="pointer-events-auto max-w-[92vw] md:max-w-[320px] text-center md:text-left mt-2 md:mt-0"
+          animate="show"
+          className="pointer-events-auto max-w-[92vw] md:max-w-[320px] text-center md:text-left mt-2 md:mt-0 order-2 md:order-1"
         >
           <motion.p
             variants={ITEM_REVEAL}
@@ -283,12 +295,12 @@ const Hero = ({ introFinished = false }: { introFinished?: boolean }) => {
         <motion.div
           variants={rightColumnStagger}
           initial="hidden"
-          animate={introFinished ? 'show' : 'hidden'}
-          className="pointer-events-auto text-center md:text-right flex flex-col items-center md:items-end font-syne"
+          animate="show"
+          className="pointer-events-auto text-center md:text-right flex flex-col items-center md:items-end font-syne order-1 md:order-2"
         >
           <motion.div
             variants={ITEM_REVEAL}
-            className="md:hidden relative h-[33vh] min-h-[220px] max-h-[320px] w-full mb-7 flex items-center justify-center pointer-events-none"
+            className="md:hidden relative h-[42vh] min-h-[260px] max-h-[380px] w-full mb-4 flex items-center justify-center pointer-events-none"
           >
             <div
               className="absolute z-0 h-[88vw] w-[88vw] max-h-[360px] max-w-[360px]"
@@ -297,15 +309,27 @@ const Hero = ({ introFinished = false }: { introFinished?: boolean }) => {
                 filter: 'blur(34px)',
               }}
             />
-            <img
-              src="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg.png"
-              alt="Sujith Kumar R"
-              width="600"
-              height="760"
-              decoding="async"
-              fetchPriority="high"
-              className="relative z-10 h-full w-auto object-cover opacity-95 drop-shadow-[0_0_40px_rgba(245,196,0,0.2)]"
-            />
+            <picture>
+              <source
+                type="image/avif"
+                srcSet="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-400.avif 400w, /Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-800.avif 800w"
+                sizes="88vw"
+              />
+              <source
+                type="image/webp"
+                srcSet="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-400.webp 400w, /Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-800.webp 800w"
+                sizes="88vw"
+              />
+              <img
+                src="/Whisk_ffff2a7bcb8b7c5b6614e7eff5344104eg-800.webp"
+                alt="Sujith Kumar R"
+                width="600"
+                height="760"
+                decoding="async"
+                fetchPriority="high"
+                className="relative z-10 h-full w-auto object-cover opacity-95 drop-shadow-[0_0_40px_rgba(245,196,0,0.2)]"
+              />
+            </picture>
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[180vw] h-[40%] bg-gradient-to-t from-[#050505] via-[#050505]/88 to-transparent z-[20]" />
           </motion.div>
 

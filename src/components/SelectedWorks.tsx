@@ -231,16 +231,29 @@ const ProjectCard = ({ project, index, onOpenCaseStudy }: ProjectCardProps) => {
             <div className="hidden md:block absolute inset-0 bg-gradient-to-l from-[#0a0a0a] via-[#0a0a0a]/30 to-transparent z-10 pointer-events-none" />
           )}
 
-          <motion.img
-            src={project.image}
-            alt={`${project.title} dashboard preview`}
-            width="800"
-            height="500"
-            loading="lazy"
-            decoding="async"
-            style={{ y: imageY }}
-            className="w-full h-[220px] md:h-full object-cover object-top scale-[1.12] group-hover:scale-[1.16] transition-transform duration-700 ease-out"
-          />
+          <motion.div style={{ y: imageY }} className="w-full h-[220px] md:h-full">
+            <picture>
+              <source
+                type="image/avif"
+                srcSet={`${project.image.replace('.png', '-400.avif')} 400w, ${project.image.replace('.png', '-800.avif')} 800w, ${project.image.replace('.png', '-1200.avif')} 1200w`}
+                sizes="(max-width: 768px) 100vw, 48vw"
+              />
+              <source
+                type="image/webp"
+                srcSet={`${project.image.replace('.png', '-400.webp')} 400w, ${project.image.replace('.png', '-800.webp')} 800w, ${project.image.replace('.png', '-1200.webp')} 1200w`}
+                sizes="(max-width: 768px) 100vw, 48vw"
+              />
+              <img
+                src={project.image.replace('.png', '-800.webp')}
+                alt={`${project.title} dashboard preview`}
+                width="800"
+                height="500"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover object-top scale-[1.12] group-hover:scale-[1.16] transition-transform duration-700 ease-out"
+              />
+            </picture>
+          </motion.div>
 
           {/* Image overlay gradient from accent */}
           <div
@@ -454,11 +467,23 @@ const SelectedWorks = () => {
             >
               {/* Modal header image with close button */}
               <div className="relative h-[180px] md:h-[240px] overflow-hidden">
-                <img
-                  src={activeProject.image}
-                  alt={`${activeProject.title} preview`}
-                  className="w-full h-full object-cover object-top"
-                />
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcSet={`${activeProject.image.replace('.png', '-800.avif')} 800w, ${activeProject.image.replace('.png', '-1200.avif')} 1200w`}
+                    sizes="(max-width: 768px) 100vw, 56rem"
+                  />
+                  <source
+                    type="image/webp"
+                    srcSet={`${activeProject.image.replace('.png', '-800.webp')} 800w, ${activeProject.image.replace('.png', '-1200.webp')} 1200w`}
+                    sizes="(max-width: 768px) 100vw, 56rem"
+                  />
+                  <img
+                    src={activeProject.image.replace('.png', '-800.webp')}
+                    alt={`${activeProject.title} preview`}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent" />
                 <div
                   className="absolute inset-0 opacity-30 mix-blend-overlay"
